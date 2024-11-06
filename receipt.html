@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt - Community Support Network</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Retrieve cart data from localStorage
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            displayReceipt(cart);
+        });
+
+        function displayReceipt(cart) {
+            const receiptContainer = document.getElementById("receipt-items");
+            const receiptTotal = document.getElementById("receipt-total");
+            let total = 0;
+            
+            // Populate receipt items
+            cart.forEach(item => {
+                const itemElement = document.createElement("li");
+                itemElement.className = "flex justify-between py-2 border-b border-gray-300";
+                itemElement.innerHTML = `<span>${item.name}</span><span>$${item.price.toFixed(2)}</span>`;
+                receiptContainer.appendChild(itemElement);
+                total += item.price;
+            });
+
+            // Display total amount
+            receiptTotal.innerText = `Total: $${total.toFixed(2)}`;
+        }
+
+        function printReceipt() {
+            window.print();
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white p-4 shadow">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold text-indigo-600">Community Support Network</a>
+            <ul class="flex space-x-4">
+                <li><a href="index.html" class="hover:text-indigo-600">Home</a></li>
+                <li><a href="about.html" class="hover:text-indigo-600">About</a></li>
+                <li><a href="services.html" class="hover:text-indigo-600">Services</a></li>
+                <li><a href="testimonials.html" class="hover:text-indigo-600">Testimonials</a></li>
+                <li><a href="book.html" class="hover:text-indigo-600">Book Now</a></li>
+                <li><a href="contact.html" class="hover:text-indigo-600">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Receipt Section -->
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-3xl font-bold text-indigo-600 mb-4">Receipt</h2>
+            <p class="text-lg mb-4">Thank you for booking with Community Support Network. Below is a summary of your services:</p>
+            
+            <ul id="receipt-items" class="space-y-2">
+                <!-- Receipt items will be dynamically added here -->
+            </ul>
+
+            <button onclick="printReceipt()" class="mt-6 w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-200">Print Receipt</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Community Support Network. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
